@@ -1,0 +1,30 @@
+@layout('main')
+@section('content')
+{{ style('style') }}
+{{ script('https://www.amcharts.com/lib/4/core.js')}}
+{{ script('https://www.amcharts.com/lib/4/charts.js')}}
+{{ script('https://www.amcharts.com/lib/4/plugins/wordCloud.js')}}
+{{ script('https://www.amcharts.com/lib/4/themes/dark.js')}}
+    
+<div id="chartdiv"></div>
+<h1 id="data" style="display: none">{{data}}</h1>
+<script type="text/javascript">
+
+am4core.useTheme(am4themes_dark);
+// Themes end
+let chart = am4core.create("chartdiv", am4plugins_wordCloud.WordCloud);
+let series = chart.series.push(new am4plugins_wordCloud.WordCloudSeries());
+
+series.accuracy = 4;
+series.step = 15;
+series.rotationThreshold = 0.7;
+series.maxCount = 200;
+series.minWordLength = 2;
+series.labels.template.tooltipText = "{word}: {value}";
+series.fontFamily = "Courier New";
+series.maxFontSize = am4core.percent(30);
+let data = document.getElementById('data')
+series.text = data.innerText
+
+</script>
+@endsection
