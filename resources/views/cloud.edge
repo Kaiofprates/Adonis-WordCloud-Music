@@ -5,11 +5,38 @@
 {{ script('https://www.amcharts.com/lib/4/charts.js')}}
 {{ script('https://www.amcharts.com/lib/4/plugins/wordCloud.js')}}
 {{ script('https://www.amcharts.com/lib/4/themes/dark.js')}}
+{{ script('http://html2canvas.hertzen.com/dist/html2canvas.js') }}
     
 <div id="chartdiv"></div>
-<h1 id="data" style="display: none">{{data}}</h1>
-<script type="text/javascript">
 
+<h1 id="data" style="display: none">{{data}}</h1>
+<div class="save my-4 rounded justify-content-center text-light">
+    <a  type="button" class="fa fa-save  align-self-center" data-toggle="modal"  onclick="getCloud()" data-target="#exampleModal">
+        save
+    </a>    
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+            <div class="canva container d-flex justify-content-center"></div>
+      </div>
+    </div>
+  </div>
+
+<script type="text/javascript">
+function getCloud(){
+    try{
+
+    html2canvas(document.querySelector("#chartdiv")).then(canvas => {
+    //document.body.appendChild(canvas)
+    document.querySelector(".canva").appendChild(canvas)
+});
+    }catch(er){
+        console.log(er)
+    }
+}
 am4core.useTheme(am4themes_dark);
 // Themes end
 let chart = am4core.create("chartdiv", am4plugins_wordCloud.WordCloud);

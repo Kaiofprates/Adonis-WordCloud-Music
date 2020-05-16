@@ -19,7 +19,7 @@ class MainController {
             + "?art=" + artist
             + "&mus=" + music,
             + `&apikey=${key}`).then((response) => { 
-                if(response){
+                if(response != undefined){
                      try{
                       letra = response.data.mus[0].text
                      }catch(err){
